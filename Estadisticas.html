@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap-5.3.3-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./assets/css/stylesMenu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Panel de Administración - University Match</title>
+    <link rel="stylesheet" href="./assets/css/Esta.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Header con Logotipo y el botón hamburguesa para móviles -->
+            <header class="col-12 d-flex justify-content-between align-items-center p-3 fondoheader">
+                <div class="logo">
+                    <img src="./assets/img/logo.jpg" alt="Logo" class="img-fluid" style="max-height: 50px;">
+                </div>
+                <div class="header-title text-white">
+                    <h5 class="m-0">University Match - Panel de Administración</h5>
+                </div>
+                <button class="navbar-toggler" type="button" id="menuToggle" aria-expanded="false">
+                    <span class="navbar-toggler-icon"><i class="fa-solid fa-bars"></i></span>
+                </button>
+            </header>
+
+            <style>
+                /* Estilo del submenú */
+                #abccSubmenu {
+                    overflow: hidden;
+                    /* Evita desbordamiento durante la animación */
+                    background-color: #495057;
+                    /* Color de fondo del submenú */
+                }
+
+                /* Estilo de los elementos del submenú */
+                #abccSubmenu .nav-item {
+                    margin-bottom: 2px;
+                    /* Reduce la separación entre elementos */
+                }
+
+                /* Estilo de los enlaces del submenú */
+                #abccSubmenu .nav-link {
+                    font-size: 0.60rem;
+                    /* Tamaño de letra más pequeño */
+                    padding: 5px 15px;
+                    /* Reduce el relleno de los enlaces */
+                    color: #ddd;
+                    /* Color del texto */
+                }
+
+                /* Hover para enlaces del submenú */
+                #abccSubmenu .nav-link:hover {
+                    color: #fff;
+                    /* Cambia a blanco al pasar el ratón */
+                    background-color: #6c757d;
+                    /* Fondo gris más claro */
+                }
+            </style>
+
+            <style>
+                /* Estilo para rotar el ícono cuando se despliega */
+                .nav-link .submenu-icon {
+                    transition: transform 0.3s ease;
+                    /* Animación de rotación */
+                }
+
+                .nav-link[aria-expanded="true"] .submenu-icon {
+                    transform: rotate(180deg);
+                    /* Rotación hacia arriba cuando está abierto */
+                }
+            </style>
+
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-2 d-md-block sidebar bg-dark text-light">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="dashboard.html">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- ABCC Accordion -->
+                            <a class="nav-link text-light" href="#abccSubmenu" data-bs-toggle="collapse" role="button"
+                                aria-expanded="false" aria-controls="abccSubmenu">
+                                <i class="fas fa-cogs"></i> ABCC
+                                <i class="fas fa-chevron-down submenu-icon float-end"></i>
+                            </a>
+                            <div id="abccSubmenu" class="collapse">
+                                <ul class="nav flex-column ms-3">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" href="ABCC_Universidades.html">
+                                            <i class="fas fa-university"></i> Universidades
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" href="ABCC_Cursos.html">
+                                            <i class="fas fa-book-open"></i> Cursos
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" href="ABCC_ProductosDonados.html">
+                                            <i class="fas fa-gift"></i> Productos Donados
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="Ordenes de Compra.html">
+                                <i class="fas fa-box"></i> Órdenes de Compra
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="Estadisticas.html">
+                                <i class="fas fa-chart-pie"></i> Estadísticas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="Bitacora.html">
+                                <i class="fas fa-book"></i> Bitácora de Movimientos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="Reseñas.html">
+                                <i class="fas fa-star"></i> Reseñas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+            <!-- Main Content -->
+            <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-4">
+                <div class="container">
+                    <div class="row" id="estadisticas">
+                        <h2>Estadísticas Generales</h2>
+
+
+
+
+
+<!-- Distribución de Cualidades y Preferencias -->
+<div class="col-md-6 mt-4">
+    <h4>Distribución de Cualidades y Preferencias</h4>
+    <div class="chart-container">
+        <canvas id="cualidadesPreferenciasChart"></canvas>
+    </div>
+    <p class="text-muted mt-2">Esta gráfica muestra la relación entre las cualidades personales y las preferencias de los usuarios.</p>
+</div>
+
+<!-- Relación entre Hobbies y Preferencias Laborales -->
+<div class="col-md-6 mt-4">
+    <h4>Relación entre Hobbies y Preferencias Laborales</h4>
+    <div class="chart-container">
+        <canvas id="hobbiesLaboralesChart"></canvas>
+    </div>
+    <p class="text-muted mt-2">Representa cómo los hobbies están relacionados con las preferencias laborales de los usuarios.</p>
+</div>
+
+<!-- Tendencia de Preferencias Grupales -->
+<div class="col-md-6 mt-4">
+    <h4>Tendencia de Preferencias Grupales</h4>
+    <div class="chart-container">
+        <canvas id="preferenciasGrupalesChart"></canvas>
+    </div>
+    <p class="text-muted mt-2">Ilustra las tendencias de preferencias grupales a lo largo del tiempo.</p>
+</div>
+
+
+
+
+
+
+
+
+                        
+                        <!-- Universidades más visitadas -->
+                        <div class="col-md-6 mt-4">
+                            <h4>Universidades Más Visitadas</h4>
+                            <div class="chart-container">
+                                <canvas id="universidadesVisitadasChart"></canvas>
+                            </div>
+                            <p class="text-muted mt-2">Esta gráfica muestra las universidades más visitadas por los
+                                usuarios.</p>
+                        </div>
+
+                        <!-- Universidades menos visitadas -->
+                        <div class="col-md-6 mt-4">
+                            <h4>Universidades Menos Visitadas</h4>
+                            <div class="chart-container">
+                                <canvas id="universidadesMenosVisitadasChart"></canvas>
+                            </div>
+                            <p class="text-muted mt-2">Aquí se destacan las universidades con menor cantidad de visitas.
+                            </p>
+                        </div>
+
+                        <!-- Productos más donados -->
+                        <div class="col-md-6 mt-4">
+                            <h4>Categorías Más Donadas</h4>
+                            <div class="chart-container">
+                                <canvas id="productosDonadosChart"></canvas>
+                            </div>
+                            <p class="text-muted mt-2">Esta gráfica refleja los productos que se han donado con mayor
+                                frecuencia, ayudando a identificar los artículos más compartidos.</p>
+                        </div>
+
+                        <!-- Productos menos donados -->
+                        <div class="col-md-6 mt-4">
+                            <h4>Categorías Menos Donadas</h4>
+                            <div class="chart-container">
+                                <canvas id="productosMenosDonadosChart"></canvas>
+                            </div>
+                            <p class="text-muted mt-2">Muestra los productos que han recibido menos donaciones, lo que
+                                podría sugerir menor relevancia o demanda.</p>
+                        </div>
+
+                        <!-- Adquisiciones de productos donados -->
+                        <div class="col-md-6 mt-4">
+                            <h4>Adquisiciones de Productos Donados</h4>
+                            <div class="chart-container">
+                                <canvas id="adquisicionesProductosDonadosChart"></canvas>
+                            </div>
+                            <p class="text-muted mt-2">Esta gráfica muestra la cantidad de adquisiciones de productos
+                                donados, ayudando a entender su distribución.</p>
+                        </div>
+
+
+                        <!-- Categorías más buscadas -->
+                        <div class="col-md-6 mt-4">
+                            <h4>Categorías Más Buscadas</h4>
+                            <div class="chart-container">
+                                <canvas id="categoriasBuscadasChart"></canvas>
+                            </div>
+                            <p class="text-muted mt-2">Un vistazo a las categorías más buscadas por los usuarios,
+                                indicando áreas de mayor interés.</p>
+                        </div>
+
+                        <!-- Categorías menos buscadas -->
+                        <div class="col-md-6 mt-4">
+                            <h4>Categorías Menos Buscadas</h4>
+                            <div class="chart-container">
+                                <canvas id="categoriasMenosBuscadasChart"></canvas>
+                            </div>
+                            <p class="text-muted mt-2">Presenta las categorías con menor interés por parte de los
+                                usuarios, lo que podría ser útil para optimización.</p>
+                        </div>
+
+                        <!-- Usuarios con más adquisiciones -->
+                        <div class="col-md-6 mt-4">
+                            <h4>Usuarios con Más Adquisiciones</h4>
+                            <div class="chart-container">
+                                <canvas id="usuariosAdquisicionesChart"></canvas>
+                            </div>
+                            <p class="text-muted mt-2">Aquí se visualizan los usuarios con mayor número de
+                                adquisiciones, destacando a los compradores más activos.</p>
+                        </div>
+
+                        <!-- Usuarios con menos adquisiciones -->
+                        <div class="col-md-6 mt-4">
+                            <h4>Usuarios con Menos Adquisiciones</h4>
+                            <div class="chart-container">
+                                <canvas id="usuariosMenosAdquisicionesChart"></canvas>
+                            </div>
+                            <p class="text-muted mt-2">Muestra a los usuarios con menos adquisiciones, útil para
+                                identificar posibles áreas de mejora en la experiencia del usuario.</p>
+                        </div>
+
+                        <!-- Visitantes por período -->
+                        <div class="col-md-6 mt-4">
+                            <h4>Cantidad de Visitantes</h4>
+                            <div class="chart-container">
+                                <canvas id="visitantesChart"></canvas>
+                            </div>
+                            <p class="text-muted mt-2">Esta gráfica detalla el número de visitantes por período,
+                                mostrando tendencias de tráfico.</p>
+                        </div>
+
+                        <!-- Productos donados por período -->
+                        <div class="col-md-6 mt-4">
+                            <h4>Productos Donados por Período</h4>
+                            <div class="chart-container">
+                                <canvas id="productosDonadosPeriodoChart"></canvas>
+                            </div>
+                            <p class="text-muted mt-2">Ilustra la cantidad de productos donados en diferentes períodos,
+                                destacando cambios y patrones en las donaciones.</p>
+                        </div>
+
+                        
+                    </div>
+
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Universidades más visitadas
+        const universidadesVisitadasChart = new Chart(document.getElementById('universidadesVisitadasChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Universidad A', 'Universidad B', 'Universidad C'],
+                datasets: [{
+                    label: 'Visitas',
+                    data: [120, 100, 80],
+                    backgroundColor: ['#007bff', '#dc3545', '#ffc107'],
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+
+        // Universidades menos visitadas
+        const universidadesMenosVisitadasChart = new Chart(document.getElementById('universidadesMenosVisitadasChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Universidad D', 'Universidad E', 'Universidad F'],
+                datasets: [{
+                    label: 'Visitas',
+                    data: [10, 5, 2],
+                    backgroundColor: ['#28a745', '#17a2b8', '#ffc107'],
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+
+        // Productos más donados
+        const productosDonadosChart = new Chart(document.getElementById('productosDonadosChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Producto G', 'Producto H', 'Producto I'],
+                datasets: [{
+                    label: 'Donaciones',
+                    data: [50, 40, 30],
+                    backgroundColor: ['#007bff', '#dc3545', '#ffc107'],
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+
+        // Productos menos donados
+        const productosMenosDonadosChart = new Chart(document.getElementById('productosMenosDonadosChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Producto J', 'Producto K', 'Producto L'],
+                datasets: [{
+                    label: 'Donaciones',
+                    data: [5, 3, 1],
+                    backgroundColor: ['#28a745', '#17a2b8', '#ffc107'],
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+
+        // Adquisiciones de productos donados
+        const adquisicionesProductosDonadosChart = new Chart(
+            document.getElementById('adquisicionesProductosDonadosChart').getContext('2d'),
+            {
+                type: 'bar',
+                data: {
+                    labels: ['Producto A', 'Producto B', 'Producto C', 'Producto D'],
+                    datasets: [{
+                        label: 'Cantidad de Adquisiciones',
+                        data: [30, 50, 80, 40],
+                        backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Cantidad'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Categorías de Productos'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    }
+                }
+            }
+        );
+
+
+        // Categorías más buscadas
+        const categoriasBuscadasChart = new Chart(document.getElementById('categoriasBuscadasChart').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ['Categoría A', 'Categoría B', 'Categoría C'],
+                datasets: [{
+                    data: [45, 35, 20],
+                    backgroundColor: ['#007bff', '#dc3545', '#ffc107'],
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // Categorías menos buscadas
+        const categoriasMenosBuscadasChart = new Chart(document.getElementById('categoriasMenosBuscadasChart').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ['Categoría D', 'Categoría E', 'Categoría F'],
+                datasets: [{
+                    data: [10, 5, 2],
+                    backgroundColor: ['#28a745', '#17a2b8', '#ffc107'],
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // Usuarios con más adquisiciones
+        const usuariosAdquisicionesChart = new Chart(document.getElementById('usuariosAdquisicionesChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Usuario X', 'Usuario Y', 'Usuario Z'],
+                datasets: [{
+                    label: 'Adquisiciones',
+                    data: [10, 8, 7],
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0,123,255,0.5)',
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+
+        // Usuarios con menos adquisiciones
+        const usuariosMenosAdquisicionesChart = new Chart(document.getElementById('usuariosMenosAdquisicionesChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Usuario A', 'Usuario B', 'Usuario C'],
+                datasets: [{
+                    label: 'Adquisiciones',
+                    data: [1, 2, 3],
+                    borderColor: '#28a745',
+                    backgroundColor: 'rgba(40,167,69,0.5)',
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+
+        // Visitantes por período
+        const visitantesChart = new Chart(document.getElementById('visitantesChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
+                datasets: [{
+                    label: 'Visitantes',
+                    data: [200, 180, 220, 250],
+                    borderColor: '#dc3545',
+                    backgroundColor: 'rgba(220,53,69,0.5)',
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+
+        // Productos donados por período
+        const productosDonadosPeriodoChart = new Chart(document.getElementById('productosDonadosPeriodoChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Trimestre 1', 'Trimestre 2', 'Trimestre 3', 'Trimestre 4'],
+                datasets: [{
+                    label: 'Productos Donados',
+                    data: [150, 180, 200, 170],
+                    backgroundColor: ['#007bff', '#28a745', '#ffc107', '#17a2b8'],
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+    </script>
+<script>
+    // Distribución de Cualidades y Preferencias
+    const cualidadesPreferenciasChart = new Chart(document.getElementById('cualidadesPreferenciasChart').getContext('2d'), {
+        type: 'radar',
+        data: {
+            labels: ['Liderazgo', 'Trabajo en Equipo', 'Creatividad', 'Organización', 'Adaptabilidad'],
+            datasets: [{
+                label: 'Cualidades',
+                data: [85, 70, 90, 65, 80],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }, {
+                label: 'Preferencias',
+                data: [75, 80, 85, 70, 90],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    // Relación entre Hobbies y Preferencias Laborales
+    const hobbiesLaboralesChart = new Chart(document.getElementById('hobbiesLaboralesChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Tecnología', 'Ciencias', 'Humanidades', 'Artes', 'Negocios'],
+            datasets: [{
+                label: 'Compatibilidad con Preferencias Laborales (%)',
+                data: [80, 70, 90, 60, 75],
+                backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#17a2b8'],
+            }]
+        },
+        options: { scales: { y: { beginAtZero: true } } }
+    });
+
+    // Tendencia de Preferencias Grupales
+    const preferenciasGrupalesChart = new Chart(document.getElementById('preferenciasGrupalesChart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: ['2020', '2021', '2022', '2023', '2024'],
+            datasets: [{
+                label: 'Preferencias Académicas',
+                data: [40, 50, 45, 60, 70],
+                borderColor: '#007bff',
+                tension: 0.4,
+                fill: false
+            }, {
+                label: 'Preferencias Laborales',
+                data: [30, 35, 40, 50, 65],
+                borderColor: '#dc3545',
+                tension: 0.4,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Porcentaje (%)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Año'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+
+    <script>
+
+
+        // Funcionalidad para abrir y cerrar el menú lateral en pantallas pequeñas
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        menuToggle.addEventListener('click', function () {
+            sidebar.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+    </script>
+
+    <script src="bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
